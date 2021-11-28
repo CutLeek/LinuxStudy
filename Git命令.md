@@ -38,11 +38,12 @@ git add [dir]
 git add .
 ```
 
-4、配置个人名称和电子邮件信息
+4、配置个人名称和电子邮件信息以及忽略windows与linux、max换行符不同的问题
 
 ```
 git config --global user.name "CutLeek"
 git config --global user.email "kirobot@163.com"
+git config --global core.autocrlf false
 ```
 
 5、将暂存区的代码提交到本地仓库
