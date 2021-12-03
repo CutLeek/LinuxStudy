@@ -1,34 +1,34 @@
 # Linux常用命令
 
-## cd
+## 一、cd
 
 cd即change directory，改变工作目录，常用的命令如下
 
-1、进入/opt目录
+### 1、进入/opt目录
 
 ```
 cd /opt
 ```
 
-2、进入当前用户的家目录
+### 2、进入当前用户的家目录
 
 ```
 cd
 ```
 
-3、进入到当前目录的上级目录
+### 3、进入到当前目录的上级目录
 
 ```
 cd ..
 ```
 
-4、返回进入此目录之前的目录
+### 4、返回进入此目录之前的目录
 
 ```
 cd -
 ```
 
-## ls
+## 二、ls
 
 ls就是list的缩写，常用于列出目录下的文件，下面是ls命令涉及到的所有的参数
 
@@ -139,43 +139,43 @@ SELinux options:
 
 ls常用的命令和参数其实并不多，接下来列举几个常用的命令
 
-1、列出当前目录下的文件
+### 1、列出当前目录下的文件
 
 ```
 ls
 ```
 
-2、列出指定目录下的文件
+### 2、列出指定目录下的文件
 
 ```
 ls /opt      此处以/opt目录举例，可以是任意目录
 ```
 
-3、列出目录下的所有文件，包含隐藏文件
+### 3、列出目录下的所有文件，包含隐藏文件
 
 ```
 ls -a
 ```
 
-4、列出文件大小、权限、所有者等详细信息
+### 4、列出文件大小、权限、所有者等详细信息
 
 ```
 ls -l
 ```
 
-5、列出的时候，以文件修改时间排序
+### 5、列出的时候，以文件修改时间排序
 
 ```
 ls -t
 ```
 
-6、排序时以相反次序排列，通常与-t选项一起使用
+### 6、排序时以相反次序排列，通常与-t选项一起使用
 
 ```
 ls -r
 ```
 
-## pwd
+## 三、pwd
 
 pwd，即print work directory，常被用来查看当前的工作目录，用法也非常的简单，只需要在终端输入pwd即可
 
@@ -183,7 +183,7 @@ pwd，即print work directory，常被用来查看当前的工作目录，用法
 pwd
 ```
 
-## mkdir
+## 四、mkdir
 
 我们通常使用mkdir命令来创建一个目录，创建目录的时候会去校验这个目录是不是已经存在了，如果已经存在则不会再去创建，所有的参数如下
 
@@ -201,13 +201,13 @@ pwd
 
 ```
 
-1、创建一个目录
+### 1、创建一个目录
 
 ```
 mkdir /soft
 ```
 
-2、创建目录的时候，如果父目录不存在，那么一并创建出来
+### 2、创建目录的时候，如果父目录不存在，那么一并创建出来
 
 ```
 mkdir -p /soft/tmp
@@ -215,25 +215,25 @@ mkdir -p /soft/tmp
 注：如果/soft目录不存在的话，直接执行mkdir /soft/tmp是无法创建的，需要先创建/soft目录，而使用-p参数之后，会将/soft目录和/soft/tmp目录一并创建出来
 ```
 
-3、创建的时候显示过程，用的比较少，在一次性创建很多目录的时候会用到
+### 3、创建的时候显示过程，用的比较少，在一次性创建很多目录的时候会用到
 
 ```
 mkdir -v /soft
 ```
 
-4、创建目录的时候指定目录权限为777
+### 4、创建目录的时候指定目录权限为777
 
 ```
 mkdir -m 777 /soft
 ```
 
-5、一次创建一个项目会用到的所有目录
+### 5、一次创建一个项目会用到的所有目录
 
 ```
 mkdir -vp /soft/{lib,bin,doc/{doc,tmp}}
 ```
 
-## rm
+## 五、rm
 
 rm命令就是Linux用来删除文件或目录的命令，因为删除的数据无法进行恢复，所以在使用此命令的时候，需要小心谨慎一些，下面是rm的所有参数
 
@@ -257,26 +257,26 @@ rm命令就是Linux用来删除文件或目录的命令，因为删除的数据�
       --version  output version information and exit
 ```
 
-1、删除一个文件
+### 1、删除一个文件
 
 ```
 rm a.txt
 注：此命令执行后会询问是否确定要删除，确认后会执行真正的删除操作
 ```
 
-2、递归删除，删除一个目录及目录下的所有内容
+### 2、递归删除，删除一个目录及目录下的所有内容
 
 ```
 rm -r /soft
 ```
 
-3、强制并递归删除一个目录
+### 3、强制并递归删除一个目录
 
 ```
 rm -rf /soft
 ```
 
-## mv
+## 六、mv
 
 mv就是move的意思，通常用来移动一个文件或目录，或者是给文件改名，以下为mv的所有参数
 
@@ -303,25 +303,25 @@ If you specify more than one of -i, -f, -n, only the final one takes effect.
 
 ```
 
-1、给一个文件改名，例如将a.txt改为b.txt
+### 1、给一个文件改名，例如将a.txt改为b.txt
 
 ```
 mv a.txt b.txt
 ```
 
-2、移动一个文件，例如将a.txt移动到/tmp下
+### 2、移动一个文件，例如将a.txt移动到/tmp下
 
 ```
 mv a.txt /tmp
 ```
 
-3、将a.txt改为b.txt，如果b.txt已存在，强制覆盖，并在覆盖之前备份b.txt
+### 3、将a.txt改为b.txt，如果b.txt已存在，强制覆盖，并在覆盖之前备份b.txt
 
 ```
 mv -bf a.txt b.txt
 ```
 
-## cp
+## 七、cp
 
 cp，就是copy的意思，通常用来复制文件，所有参数如下
 
@@ -375,30 +375,157 @@ cp，就是copy的意思，通常用来复制文件，所有参数如下
       --version  output version information and exit
 ```
 
-1、复制a.txt到/tmp下
+### 1、复制a.txt到/tmp下
 
 ```
 cp a.txt /tmp
 注：若文件已存在，会询问是否覆盖
 ```
 
-2、复制a.txt到/tmp下并改名为b.txt
+### 2、复制a.txt到/tmp下并改名为b.txt
 
 ```
 cp a.txt /tmp/b.txt
 ```
 
-3、复制整个a目录到b目录下
+### 3、复制整个a目录到b目录下
 
 ```
 cp -r a/ b/
 ```
 
+## 八、touch
 
+touch命令通常被用来创建一个文件或者是修改文件的日期，一般我们只用来创建文件，以下为touch的所有参数
 
+```shell
+  -a                     change only the access time
+  -c, --no-create        do not create any files
+  -d, --date=STRING      parse STRING and use it instead of current time
+  -f                     (ignored)
+  -h, --no-dereference   affect each symbolic link instead of any referenced
+                         file (useful only on systems that can change the
+                         timestamps of a symlink)
+  -m                     change only the modification time
+  -r, --reference=FILE   use this file's times instead of current time
+  -t STAMP               use [[CC]YY]MMDDhhmm[.ss] instead of current time
+      --time=WORD        change the specified time:
+                           WORD is access, atime, or use: equivalent to -a
+                           WORD is modify or mtime: equivalent to -m
+      --help     display this help and exit
+      --version  output version information and exit
+```
 
+### 1、创建一个a.txt的文件
 
+```
+touch a.txt
+```
 
+### 2、把a.txt的时间改为和b.txt一致
+
+```shell
+touch -r a.txt b.txt
+```
+
+## 九、cat
+
+cat我们常用来查看某个文件，默认将文件的所有内容返回到屏幕上，以下为cat的所有参数
+
+```shell
+  -A, --show-all           equivalent to -vET
+  -b, --number-nonblank    number nonempty output lines, overrides -n
+  -e                       equivalent to -vE
+  -E, --show-ends          display $ at end of each line
+  -n, --number             number all output lines
+  -s, --squeeze-blank      suppress repeated empty output lines
+  -t                       equivalent to -vT
+  -T, --show-tabs          display TAB characters as ^I
+  -u                       (ignored)
+  -v, --show-nonprinting   use ^ and M- notation, except for LFD and TAB
+      --help     display this help and exit
+      --version  output version information and exit
+```
+
+### 1、查看a.txt文件
+
+```
+cat a.txt
+```
+
+### 2、查看a.txt并将所有行进行编号
+
+```shell
+cat -n a.txt
+```
+
+### 3、查看a.txt并将所有非空的行进行编号
+
+```shell
+cat -b a.txt
+```
+
+## 十、more和less
+
+more和less的功能和cat有些类似，都是去读取文件的内容，more说实话有些鸡肋，也是直接就把所有的文件内容直接就读出来了，而且不支持往回翻页，所以在用的时候常常用less
+
+### 1、查看a.txt文件
+
+```
+less a.txt
+```
+
+### 2、查看进行的时候分页显示
+
+```shell
+ps -ef |less
+```
+
+## 十一、head和tail
+
+head和tail命令经常的被用到，含义和本身的英文释义及其相似，head是从头开始显示，tail是从末尾开始显示，默认都是显示10行
+
+### 1、查看a.txt的末尾20行
+
+```shell
+tail -20 a.txt
+```
+
+## 十二、which
+
+which命令被用来查找命令的的实际位置，会在$PATH中查找，所有参数如下
+
+```shell
+  --version, -[vV] Print version and exit successfully.
+  --help,          Print this help and exit successfully.
+  --skip-dot       Skip directories in PATH that start with a dot.
+  --skip-tilde     Skip directories in PATH that start with a tilde.
+  --show-dot       Don't expand a dot to current directory in output.
+  --show-tilde     Output a tilde for HOME directory for non-root.
+  --tty-only       Stop processing options on the right if not on tty.
+  --all, -a        Print all matches in PATH, not just the first
+  --read-alias, -i Read list of aliases from stdin.
+  --skip-alias     Ignore option --read-alias; don't read stdin.
+  --read-functions Read shell functions from stdin.
+  --skip-functions Ignore option --read-functions; don't read stdin.
+```
+
+### 1、查找ls命令的路径
+
+```shell
+which ls
+```
+
+## 十三、whereis
+
+在Linux中，whereis被用来查找二进制文件，和which不同的是，Linux中所有的二进制文件都会保存在一个数据库文件里，所以检测起来比较的方便，不局限于环境变量中
+
+```shell
+whereis ls
+whereis nginx
+```
+
+## 十四、
 
 
 
