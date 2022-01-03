@@ -1,3 +1,7 @@
 # LinuxStudy
-good good study day day up
+```
+这里面主要是我学习的Linux的一些知识，以及在实际运用的过程中，会碰到的一些问题，在此做一个整理记录
+```
+
+
 

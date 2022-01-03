@@ -66,11 +66,21 @@ yum -y install git
 
 
 
+## 遇到过的问题
 
+### 1、git push总是需要输密码的问题
 
+```
+现象：使用git push往github推代码的时候总是提示我输入密码，我明明已经把我的公钥拷贝到GitHub了，输错了就更烦人了
+```
 
+![1640822162457](E:\MyStudy\LinuxStudy\pictures\1640822162457.png)
 
+```
+解决方法：找到当前你本地代码库的.git文件夹，里面有一个config文件，打开之后在remote origin选项中可以看到一个url，这个url如果是http的地址，就会去校验你的密码，没有走ssh这条线路，所以需要把这个地方的地址换成ssh的地址，就解决了需要输入密码的问题
+```
 
+![1640822599033](E:\MyStudy\LinuxStudy\pictures\1640822599033.png)
 
 
 
