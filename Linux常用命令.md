@@ -626,7 +626,11 @@ find命令把匹配到的文件传递给xargs命令，而xargs命令每次只获
 
 
 
+## 十五、fuser
 
+fuser命令可以用来查看当前这个文件，正在被哪个进程使用
+
+常用的命令为fuser -uv /tmp/test1
 
 
 
