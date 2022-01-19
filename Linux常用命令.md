@@ -633,7 +633,22 @@ fuser命令可以用来查看当前这个文件，正在被哪个进程使用
 常用的命令为fuser -uv /tmp/test1
 
 
+## 十六、ldd
+ldd命令可以列出一个程序所需要得动态链接库（so）
 
+## 十七、ab
+ab命令常被我们用来做压力测试，对nginx做压力测试
+下载ab的方式：yum -y intsall httpd-tools
+
+常用命令：ab -c 10 -n 100 http://a.ilanni.com/index.php
+
+-c10表示并发用户数为10
+
+-n100表示请求总数为100
+
+http://a.ilanni.com/index.php表示请求的目标URL
+
+这行表示同时处理100个请求并运行10次index.php文件。
 
 
 
