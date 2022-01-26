@@ -15,10 +15,6 @@
 centosVersion=$(awk '{print $(NF-1)}' /etc/redhat-release)
 VERSION=`date +%F`
 
-#日志相关
-LOGPATH="./log"
-[ -e $LOGPATH ] || mkdir $LOGPATH
-RESULTFILE="$LOGPATH/DailyCheck-`hostname`-`date +%Y%m%d`.txt"
 
 
 #定义报表的全局变量
@@ -665,7 +661,7 @@ function uploadHostDailyCheckReport(){
     curl -l -H "Content-type: application/json" -X POST -d "$json" "$uploadHostDailyCheckReportApi" 2>/dev/null
 }
 
-function check(){
+function root_check(){
     version
     getSystemStatus
     getCpuStatus
@@ -689,10 +685,17 @@ function check(){
     getNTPStatus
     getInstalledStatus
 }
-
-#执行检查并保存检查结果
-check > $RESULTFILE
-
+if [ `whoami` != 'root' ];then
+    LOGPATH="/tmp/admin_check_log"
+    [ -e $LOGPATH ] || mkdir $LOGPATH
+    RESULTFILE="$LOGPATH/DailyCheck-`hostname`-`date +%Y%m%d`.txt"
+    admin_check |tee $RESULTFILE
+else
+    LOGPATH="/tmp/root_check_log"
+    [ -e $LOGPATH ] || mkdir $LOGPATH
+    RESULTFILE="$LOGPATH/DailyCheck-`hostname`-`date +%Y%m%d`.txt"
+    root_check |tee $RESULTFILE
+fi
 echo -e "\033[44;37m 检查结果存放在：$RESULTFILE \033[0m"
 
 #上传检查结果的文件
