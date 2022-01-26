@@ -4,64 +4,61 @@
 # Version: V1.0
 # Author: CutLeek
 # Created Time : 2022-01-25
-# Description:
+# Description:日常巡检脚本，目前7依然处于开发中，待优化
 ##############################################################
-#一般巡检的时候我喜欢用admin用户跑，但是由于此脚本有许多检查项需要用到root权限，后续待优化
-#if [ `whoami` != 'admin' ];then
-#   echo "Please run this script by admin!"
-#   exit 1
-#fi
 
 centosVersion=$(awk '{print $(NF-1)}' /etc/redhat-release)
 VERSION=`date +%F`
 
 
 
-#定义报表的全局变量
-report_DateTime=""  
-report_Hostname=""   
-report_OSRelease=""    
-report_Kernel=""   
-report_Language=""   
-report_LastReboot=""   
-report_Uptime=""   
-report_CPUs=""  
-report_CPUType=""  
-report_Arch=""   
-report_MemTotal=""    
-report_MemFree=""   
-report_MemUsedPercent=""   
-report_DiskTotal=""    
-report_DiskFree=""    
-report_DiskUsedPercent=""    
-report_InodeTotal=""   
-report_InodeFree="" 
-report_InodeUsedPercent=""  
-report_IP=""  
-report_MAC=""   
-report_Gateway=""   
-report_DNS=""   
-report_Listen=""   
-report_Selinux=""  
-report_Firewall=""   
-report_USERs=""   
-report_USEREmptyPassword=""  
-report_USERTheSameUID=""      
-report_PasswordExpiry=""    
-report_RootUser=""   
-report_Sudoers=""   
-report_SSHAuthorized=""   
-report_SSHDProtocolVersion=""    
-report_SSHDPermitRootLogin=""   
-report_DefunctProsess=""    
-report_SelfInitiatedService=""   
-report_SelfInitiatedProgram=""   
-report_RuningService=""           
-report_Crontab=""    
-report_Syslog=""   
-report_SNMP=""    
-report_NTP=""    
-report_JDK=""   
+#定义报表的全局变量,目前用不到，用于上传巡检报告
+#report_DateTime=""  
+#report_Hostname=""   
+#report_OSRelease=""    
+#report_Kernel=""   
+#report_Language=""   
+#report_LastReboot=""   
+#report_Uptime=""   
+#report_CPUs=""  
+#report_CPUType=""  
+#report_Arch=""   
+#report_MemTotal=""    
+#report_MemFree=""   
+#report_MemUsedPercent=""   
+#report_DiskTotal=""    
+#report_DiskFree=""    
+#report_DiskUsedPercent=""    
+#report_InodeTotal=""   
+#report_InodeFree="" 
+#report_InodeUsedPercent=""  
+#report_IP=""  
+#report_MAC=""   
+#report_Gateway=""   
+#report_DNS=""   
+#report_Listen=""   
+#report_Selinux=""  
+#report_Firewall=""   
+#report_USERs=""   
+#report_USEREmptyPassword=""  
+#report_USERTheSameUID=""      
+#report_PasswordExpiry=""    
+#report_RootUser=""   
+#report_Sudoers=""   
+#report_SSHAuthorized=""   
+#report_SSHDProtocolVersion=""    
+#report_SSHDPermitRootLogin=""   
+#report_DefunctProsess=""    
+#report_SelfInitiatedService=""   
+#report_SelfInitiatedProgram=""   
+#report_RuningService=""           
+#report_Crontab=""    
+#report_Syslog=""   
+#report_SNMP=""    
+#report_NTP=""    
+#report_JDK=""   
+
+#打印当前巡检的日期
 function version(){
     echo ""
     echo ""
@@ -82,9 +79,9 @@ function getCpuStatus(){
     echo "    CPU型号:$CPU_Type"
     echo "    CPU架构:$CPU_Arch"
     #报表信息
-    report_CPUs=$Virt_CPUs 
-    report_CPUType=$CPU_Type 
-    report_Arch=$CPU_Arch   
+    #report_CPUs=$Virt_CPUs 
+    #report_CPUType=$CPU_Type 
+    #report_Arch=$CPU_Arch   
 }
 
 function getMemStatus(){
@@ -96,13 +93,13 @@ function getMemStatus(){
         free -h
     fi
     #报表信息
-    MemTotal=$(grep MemTotal /proc/meminfo| awk '{print $2}')  #KB
-    MemFree=$(grep MemFree /proc/meminfo| awk '{print $2}')    #KB
-    let MemUsed=MemTotal-MemFree
-    MemPercent=$(awk "BEGIN {if($MemTotal==0){printf 100}else{printf \"%.2f\",$MemUsed*100/$MemTotal}}")
-    report_MemTotal="$((MemTotal/1024))""MB"      
-    report_MemFree="$((MemFree/1024))""MB"       
-    report_MemUsedPercent="$(awk "BEGIN {if($MemTotal==0){printf 100}else{printf \"%.2f\",$MemUsed*100/$MemTotal}}")""%"  
+    #MemTotal=$(grep MemTotal /proc/meminfo| awk '{print $2}')  #KB
+    #MemFree=$(grep MemFree /proc/meminfo| awk '{print $2}')    #KB
+    #let MemUsed=MemTotal-MemFree
+    #MemPercent=$(awk "BEGIN {if($MemTotal==0){printf 100}else{printf \"%.2f\",$MemUsed*100/$MemTotal}}")
+    #report_MemTotal="$((MemTotal/1024))""MB"      
+    #report_MemFree="$((MemFree/1024))""MB"       
+    #report_MemUsedPercent="$(awk "BEGIN {if($MemTotal==0){printf 100}else{printf \"%.2f\",$MemUsed*100/$MemTotal}}")""%"  
 }
 
 function getDiskStatus(){
@@ -112,22 +109,22 @@ function getDiskStatus(){
     df -hTP | sed 's/Mounted on/Mounted/'> /tmp/disk 
     join /tmp/disk /tmp/inode | awk '{print $1,$2,"|",$3,$4,$5,$6,"|",$8,$9,$10,$11,"|",$12}'| column -t
     #报表信息
-    diskdata=$(df -TP | sed '1d' | awk '$2!="tmpfs"{print}') #KB
-    disktotal=$(echo "$diskdata" | awk '{total+=$3}END{print total}') #KB
-    diskused=$(echo "$diskdata" | awk '{total+=$4}END{print total}')  #KB
-    diskfree=$((disktotal-diskused)) #KB
-    diskusedpercent=$(echo $disktotal $diskused | awk '{if($1==0){printf 100}else{printf "%.2f",$2*100/$1}}') 
-    inodedata=$(df -iTP | sed '1d' | awk '$2!="tmpfs"{print}')
-    inodetotal=$(echo "$inodedata" | awk '{total+=$3}END{print total}')
-    inodeused=$(echo "$inodedata" | awk '{total+=$4}END{print total}')
-    inodefree=$((inodetotal-inodeused))
-    inodeusedpercent=$(echo $inodetotal $inodeused | awk '{if($1==0){printf 100}else{printf "%.2f",$2*100/$1}}')
-    report_DiskTotal=$((disktotal/1024/1024))"GB" 
-    report_DiskFree=$((diskfree/1024/1024))"GB"   
-    report_DiskUsedPercent="$diskusedpercent""%"   
-    report_InodeTotal=$((inodetotal/1000))"K"     
-    report_InodeFree=$((inodefree/1000))"K"       
-    report_InodeUsedPercent="$inodeusedpercent""%" 
+    #diskdata=$(df -TP | sed '1d' | awk '$2!="tmpfs"{print}') #KB
+    #disktotal=$(echo "$diskdata" | awk '{total+=$3}END{print total}') #KB
+    #diskused=$(echo "$diskdata" | awk '{total+=$4}END{print total}')  #KB
+    #diskfree=$((disktotal-diskused)) #KB
+    #diskusedpercent=$(echo $disktotal $diskused | awk '{if($1==0){printf 100}else{printf "%.2f",$2*100/$1}}') 
+    #inodedata=$(df -iTP | sed '1d' | awk '$2!="tmpfs"{print}')
+    #inodetotal=$(echo "$inodedata" | awk '{total+=$3}END{print total}')
+    #inodeused=$(echo "$inodedata" | awk '{total+=$4}END{print total}')
+    #inodefree=$((inodetotal-inodeused))
+    #inodeusedpercent=$(echo $inodetotal $inodeused | awk '{if($1==0){printf 100}else{printf "%.2f",$2*100/$1}}')
+    #report_DiskTotal=$((disktotal/1024/1024))"GB" 
+    #report_DiskFree=$((diskfree/1024/1024))"GB"   
+    #report_DiskUsedPercent="$diskusedpercent""%"   
+    #report_InodeTotal=$((inodetotal/1000))"K"     
+    #report_InodeFree=$((inodefree/1000))"K"       
+    #report_InodeUsedPercent="$inodeusedpercent""%" 
 
 }
 
@@ -157,14 +154,14 @@ function getSystemStatus(){
     echo " 最后启动：$LastReboot"
     echo " 运行时间：$uptime"
     #报表信息
-    report_DateTime=$(date +"%F %T")  
-    report_Hostname="$Hostname"     
-    report_OSRelease="$Release"       
-    report_Kernel="$Kernel"           
-    report_Language="$default_LANG"   
-    report_LastReboot="$LastReboot"   
-    report_Uptime="$uptime"          
-    report_Selinux="$SELinux"
+    #report_DateTime=$(date +"%F %T")  
+    #report_Hostname="$Hostname"     
+    #report_OSRelease="$Release"       
+    #report_Kernel="$Kernel"           
+    #report_Language="$default_LANG"   
+    #report_LastReboot="$LastReboot"   
+    #report_Uptime="$uptime"          
+    #report_Selinux="$SELinux"
     export LANG="$default_LANG"
 
 }
@@ -177,14 +174,14 @@ function getServiceStatus(){
         conf=$(systemctl list-unit-files --type=service --state=enabled --no-pager | grep "enabled")
         process=$(systemctl list-units --type=service --state=running --no-pager | grep ".service")
         #报表信息
-        report_SelfInitiatedService="$(echo "$conf" | wc -l)"     
-        report_RuningService="$(echo "$process" | wc -l)"         
+        #report_SelfInitiatedService="$(echo "$conf" | wc -l)"     
+        #report_RuningService="$(echo "$process" | wc -l)"         
     else
         conf=$(/sbin/chkconfig | grep -E ":on|:启用")
         process=$(/sbin/service --status-all 2>/dev/null | grep -E "is running|正在运行")
         #报表信息
-        report_SelfInitiatedService="$(echo "$conf" | wc -l)"      
-        report_RuningService="$(echo "$process" | wc -l)"          
+        #report_SelfInitiatedService="$(echo "$conf" | wc -l)"      
+        #report_RuningService="$(echo "$process" | wc -l)"          
     fi
     echo "服务配置"
     echo "--------"
@@ -203,7 +200,7 @@ function getAutoStartStatus(){
     conf=$(grep -v "^#" /etc/rc.d/rc.local| sed '/^$/d')
     echo "$conf"
     #报表信息
-    report_SelfInitiatedProgram="$(echo $conf | wc -l)"   
+    #report_SelfInitiatedProgram="$(echo $conf | wc -l)"   
 }
 
 function getLoginStatus(){
@@ -227,12 +224,12 @@ function getNetworkStatus(){
     echo "网关：$GATEWAY "
     echo "DNS：$DNS"
     #报表信息
-    IP=$(ip -f inet addr | grep -v 127.0.0.1 |  grep inet | awk '{print $NF,$2}' | tr '\n' ',' | sed 's/,$//')
-    MAC=$(ip link | grep -v "LOOPBACK\|loopback" | awk '{print $2}' | sed 'N;s/\n//' | tr '\n' ',' | sed 's/,$//')
-    report_IP="$IP"         
-    report_MAC=$MAC          
-    report_Gateway="$GATEWAY" 
-    report_DNS="$DNS"
+    #IP=$(ip -f inet addr | grep -v 127.0.0.1 |  grep inet | awk '{print $NF,$2}' | tr '\n' ',' | sed 's/,$//')
+    #MAC=$(ip link | grep -v "LOOPBACK\|loopback" | awk '{print $2}' | sed 'N;s/\n//' | tr '\n' ',' | sed 's/,$//')
+    #report_IP="$IP"         
+    #report_MAC=$MAC          
+    #report_Gateway="$GATEWAY" 
+    #report_DNS="$DNS"
     echo ""
 ping -c 4 www.baidu.com >/dev/null 2>&1
 if [ $? -eq 0 ];then
@@ -248,7 +245,7 @@ function getListenStatus(){
     TCPListen=$(ss -ntul | column -t)
     echo "$TCPListen"
     #报表信息
-    report_Listen="$(echo "$TCPListen"| sed '1d' | awk '/tcp/ {print $5}' | awk -F: '{print $NF}' | sort | uniq | wc -l)"
+    #report_Listen="$(echo "$TCPListen"| sed '1d' | awk '/tcp/ {print $5}' | awk -F: '{print $NF}' | sort | uniq | wc -l)"
 }
 
 function getCronStatus(){
@@ -272,7 +269,7 @@ function getCronStatus(){
     find /etc/cron* -type f | xargs -i ls -l {} | column  -t
     let Crontab=Crontab+$(find /etc/cron* -type f | wc -l)
     #报表信息
-    report_Crontab="$Crontab"   
+    #report_Crontab="$Crontab"   
 }
 function getHowLongAgo(){
     # 计算一个时间戳离现在有多久了
@@ -384,10 +381,10 @@ function getUserStatus(){
         USERTheSameUID="$USERTheSameUID $r,"
     done
     #报表信息
-    report_USERs="$USERs"  
-    report_USEREmptyPassword=$(echo $USEREmptyPassword | sed 's/^,//') 
-    report_USERTheSameUID=$(echo $USERTheSameUID | sed 's/,$//') 
-    report_RootUser=$(echo $RootUser | sed 's/^,//')   
+   # report_USERs="$USERs"  
+   # report_USEREmptyPassword=$(echo $USEREmptyPassword | sed 's/^,//') 
+   # report_USERTheSameUID=$(echo $USERTheSameUID | sed 's/,$//') 
+   # report_RootUser=$(echo $RootUser | sed 's/^,//')   
 }
 
 
@@ -415,7 +412,7 @@ function getPasswordStatus {
             fi
         done
     done
-    report_PasswordExpiry=$(echo $result | sed 's/^,//')
+    #report_PasswordExpiry=$(echo $result | sed 's/^,//')
 
     echo ""
     echo "密码策略检查"
@@ -432,7 +429,7 @@ function getSudoersStatus(){
     echo "$conf"
     echo ""
     #报表信息
-    report_Sudoers="$(echo $conf | wc -l)"
+    #report_Sudoers="$(echo $conf | wc -l)"
 }
 
 function getInstalledStatus(){
@@ -461,7 +458,7 @@ function getProcessStatus(){
     echo "------------"
     top b -n1 | head -17 | tail -11
     #报表信息
-    report_DefunctProsess="$(ps -ef | grep defunct | grep -v grep|wc -l)"
+    #report_DefunctProsess="$(ps -ef | grep defunct | grep -v grep|wc -l)"
 }
 
 function getJDKStatus(){
@@ -473,7 +470,7 @@ function getJDKStatus(){
     fi
     echo "JAVA_HOME=\"$JAVA_HOME\""
     #报表信息
-    report_JDK="$(java -version 2>&1 | grep version | awk '{print $1,$3}' | tr -d '"')"
+    #report_JDK="$(java -version 2>&1 | grep version | awk '{print $1,$3}' | tr -d '"')"
 }
 function getSyslogStatus(){
     echo ""
@@ -484,7 +481,7 @@ function getSyslogStatus(){
     echo "-----------------"
     cat /etc/rsyslog.conf 2>/dev/null | grep -v "^#" | grep -v "^\\$" | sed '/^$/d'  | column -t
     #报表信息
-    report_Syslog="$(getState rsyslog)"
+    #report_Syslog="$(getState rsyslog)"
 }
 function getFirewallStatus(){
     echo ""
@@ -511,25 +508,8 @@ function getFirewallStatus(){
     echo "-----------------------"
     cat /etc/sysconfig/firewalld 2>/dev/null
     #报表信息
-    report_Firewall="$s"
+    #report_Firewall="$s"
 }
-
-function getSNMPStatus(){
-    #SNMP服务状态，配置等
-    echo ""
-    echo -e "\033[33m*******************************************************SNMP检查*******************************************************\033[0m"
-    status="$(getState snmpd)"
-    echo "服务状态：$status"
-    echo ""
-    if [ -e /etc/snmp/snmpd.conf ];then
-        echo "/etc/snmp/snmpd.conf"
-        echo "--------------------"
-        cat /etc/snmp/snmpd.conf 2>/dev/null | grep -v "^#" | sed '/^$/d'
-    fi
-    #报表信息
-    report_SNMP="$(getState snmpd)"
-}
-
 
 
 function getState(){
@@ -590,9 +570,9 @@ function getSSHStatus(){
     cat /etc/ssh/sshd_config | grep -v "^#" | sed '/^$/d'
 
     #报表信息
-    report_SSHAuthorized="$authorized"   
-    report_SSHDProtocolVersion="$Protocol_Version"   
-    report_SSHDPermitRootLogin="$PermitRootLogin"    
+    #report_SSHAuthorized="$authorized"   
+    #report_SSHDProtocolVersion="$Protocol_Version"   
+    #report_SSHDPermitRootLogin="$PermitRootLogin"    
 }
 function getNTPStatus(){
     #NTP服务状态，当前时间，配置等
@@ -606,7 +586,7 @@ function getNTPStatus(){
         cat /etc/ntp.conf 2>/dev/null | grep -v "^#" | sed '/^$/d'
     fi
     #报表信息
-    report_NTP="$(getState ntpd)"
+    #report_NTP="$(getState ntpd)"
 }
 
 #上传巡检报告
@@ -681,7 +661,6 @@ function root_check(){
     getFirewallStatus
     getSSHStatus
     getSyslogStatus
-    getSNMPStatus
     getNTPStatus
     getInstalledStatus
 }
