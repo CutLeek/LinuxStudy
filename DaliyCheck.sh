@@ -266,8 +266,8 @@ function getCronStatus(){
         done
     done
     #计划任务
-    find /etc/cron* -type f | xargs -i ls -l {} | column  -t
-    let Crontab=Crontab+$(find /etc/cron* -type f | wc -l)
+    #find /etc/cron* -type f | xargs -i ls -l {} | column  -t
+    #let Crontab=Crontab+$(find /etc/cron* -type f | wc -l)
     #报表信息
     #report_Crontab="$Crontab"   
 }
@@ -660,6 +660,24 @@ function root_check(){
     getJDKStatus
     getFirewallStatus
     getSSHStatus
+    getSyslogStatus
+    getNTPStatus
+    getInstalledStatus
+}
+function admin_check(){
+    version
+    getSystemStatus
+    getCpuStatus
+    getMemStatus
+    getDiskStatus
+    getNetworkStatus
+    getListenStatus
+    getProcessStatus
+    getServiceStatus
+    getAutoStartStatus
+    getLoginStatus
+    getJDKStatus
+    getFirewallStatus
     getSyslogStatus
     getNTPStatus
     getInstalledStatus
