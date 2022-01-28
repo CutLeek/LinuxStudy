@@ -16,3 +16,6 @@ yum clean all && yum makecache
 
 ### /etc/selinux/config
 
+## 查看服务器性能
+
+### 
