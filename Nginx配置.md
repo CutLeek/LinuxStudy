@@ -37,7 +37,7 @@ make && make install
 ### 安装 依赖库
 
 ```shell
-yum install -y gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers sqlite-devel
+yum install -y gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers sqlite-devel oniguruma oniguruma-devel
 ```
 
 ### 下载php安装包
@@ -48,19 +48,19 @@ wget http://mirrors.sohu.com/php/php-7.4.3.tar.gz
 
 ### 解压到指定目录
 
-```
+```shell
 tar xvf php-7.4.3.tar.gz && cd php-7.4.3
 ```
 
 ### 预编译
 
-```
-./configure --prefix=/data/php7 --enable-fpm
+```shell
+./configure --prefix=/data/php7 --with-config-file-path=/data/php7 --enable-mbstring --with-openssl --enable-ftp --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-pear --enable-sockets --with-zlib --with-xmlrpc --enable-fpm --enable-xml --enable-sockets --with-zlib --with-iconv --enable-soap --enable-pcntl --enable-cli --with-curl
 ```
 
 ### 编译安装
 
-````
+````shell
 make && make install
 ````
 
@@ -68,31 +68,31 @@ make && make install
 
 1、为php命令建立软链接，加入到环境变量中
 
-```
+```shell
 ln -s /data/php7/bin/php /usr/local/bin/php
 ```
 
 2、创建配置文件，并将其复制到正确的位置
 
-```
+```shell
 cp php.ini-development /data/php7/lib/php.ini
 ```
 
 3、为php-fpm命令建立软链接，加入到环境变量中
 
-```
+```shell
 ln -s /data/php7/sbin/php-fpm /usr/local/sbin/php-fpm
 ```
 
 4、复制php配置文件目录下的 php-fpm.conf.default，并重命名为 php-fpm.conf
 
-```
+```shell
 cp /data/php7/etc/php-fpm.conf.default /data/php7/etc/php-fpm.conf
 ```
 
 5、复制php配置文件目录下的 php-fpm.d/www.conf.default，并重命名为 php-fpm.d/www.conf
 
-```
+```shell
 cp /data/php7/etc/php-fpm.d/www.conf.default /data/php7/etc/php-fpm.d/www.conf
 ```
 
@@ -107,7 +107,7 @@ group = www-data
 
 7、编辑 php.ini，文件中的配置项 cgi.fix_pathinfo 设置为 0 。
 
-````
+````shell
 vim /data/php7/lib/php.ini
 
 cgi.fix_pathinfo=0
@@ -115,7 +115,7 @@ cgi.fix_pathinfo=0
 
 8、启动php-fpm
 
-```
+```shell
 php-fpm
 ```
 
