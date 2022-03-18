@@ -13,7 +13,7 @@ yum clean all && yum makecache
 https://mirrors.tuna.tsinghua.edu.cn/
 
 ## 什么情况下会出现load高？多少算高？如何处理？
-
+主要还是看cpu核数，一般来说，load超过cpu核数就算是高了
 
 
 ## 常见的配置文件详解
