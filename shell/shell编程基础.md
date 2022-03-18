@@ -19,19 +19,35 @@ a\{n\} 	重复前面a字符n次，如果用egrep或sed -r可去掉斜线
 
 
 
-
-
-
-
-
-
-
-
-
-
-先谈一谈grep 、sed 和awk的用法
+接下来就要先谈一谈grep 、sed 和awk的用法
 #grep
 grep通常我们用来在文件中过滤关键字，或者是在输出的结果中过滤关键字
+常用的用法：
+grep -i xxx    忽略大小写
+grep -v xxx    取反，过滤除了xxx的内容
+grep -n        显示行号
+grep -w xxx    完整匹配，xxx为一个完整单词，而不包括类似于aaaxxxaaa
+grep -A n      显示匹配到的字符串所在行以及其后的n行，-A含义为after
+grep -B n      显示匹配到字符串所在行以及之前的n行，-B含义为before
+grep -C n      显示匹配到字符串所在行及前后n行，-C含义为context
+
+还有两个命令也会遇到，egrep，表示支持正则表达式，zgrep，表示允许在压缩文件中过滤
+
+
+
+#sed
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
