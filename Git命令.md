@@ -58,6 +58,16 @@ git commit -m "本次修改的描述信息"
 git push origin master
 ```
 
+#### 7、删除本地分支
+```
+git branch -D $local_branch_name
+```
+
+#### 8、删除远端分支
+```
+git push origin --delete $remote_branch_name
+```
+
 ### Linux下安装git
 
 ```
@@ -116,6 +126,11 @@ See 'git help config' and search for 'push.default' for further information.
 警告：push.default （默认push）未设置；在Git 2.0 中，push.default 的值从‘matching’改为‘simple’了。消除此警告并保留以前的习惯，输入：
 git config --global push.default matching
 消除此警告并采用新的设置值，输入：git config --global push.default simple
+
+### 3、分支误删除了如何恢复
+1、git log -g 找回之前提交的commit id
+
+2、git branch recover_branch[新分支] commit_id  根据commit将文件恢复到新分支
 
 
 
