@@ -88,9 +88,7 @@ tar xvf mysql-5.7.35-linux-glibc2.12-x86_64.tar.gz -C /soft/
 mv /soft/mysql-5.7.35-linux-glibc2.12-x86_64/ /soft/mysql
 ```
 
-6、创建目录
-
-`mysql`文件夹，创建data文件夹，并在data文件夹中创建3306、3307、log文件夹备用。在3306和3307文件夹中分别创建data、log、tmp文件夹备用
+7、创建目录
 
 ```shell
 mkdir -p /soft/mysql/data/{3306,3307,log}
@@ -98,13 +96,13 @@ mkdir /soft/mysql/data/3306/{data,log,tmp}
 mkdir /soft/mysql/data/3307/{data,log,tmp}
 ```
 
-7、修改目录权限
+8、修改目录权限
 
 ```shell
 chown -R mysql:mysql /soft/mysql
 ```
 
-8、创建my.cnf配置文件
+9、创建my.cnf配置文件
 
 ```shell
 vim /etc/my.cnf
@@ -113,7 +111,7 @@ vim /etc/my.cnf
 ```shell
 # 启动多个mysql实例
 [client] 
-default-character-set = utf8mb4
+default-character-set = utf8
 
 [mysqld_multi] 
 mysqld = /soft/mysql/bin/mysqld_safe
@@ -158,12 +156,12 @@ long_query_time = 1
 slow_query_log_file = /soft/mysql/data/3307/log/slow.log
 log-error = /soft/mysql/data/3307/log/error.log
 binlog_format = mixed
-log-bin = /soft/mysql/data/3307/log/mysql3306_bin
+log-bin = /soft/mysql/data/3307/log/mysql3307_bin
 explicit_defaults_for_timestamp=true
 lower_case_table_names = 1
 ```
 
-9、添加环境变量
+10、添加环境变量
 
 ```shell
 vim /etc/profile
@@ -174,7 +172,7 @@ vim /etc/profile
 PATH=$PATH:/soft/mysql/bin
 ```
 
-10、初始化数据库
+11、初始化数据库
 
 ```shell
 /soft/mysql/bin/mysqld --initialize --user=mysql --basedir=/soft/mysql/ --datadir=/soft/mysql/data/3306/data
@@ -182,7 +180,7 @@ PATH=$PATH:/soft/mysql/bin
 /soft/mysql/bin/mysqld --initialize --user=mysql --basedir=/soft/mysql/ --datadir=/soft/mysql/data/3307/data
 ```
 
-11、启动数据库
+12、启动数据库
 
 ```shell
 /soft/mysql/bin/mysqld_multi start
