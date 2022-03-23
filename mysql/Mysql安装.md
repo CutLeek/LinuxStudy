@@ -172,7 +172,13 @@ vim /etc/profile
 PATH=$PATH:/soft/mysql/bin
 ```
 
-11、初始化数据库
+11、加载环境变量
+
+```shell
+source /etc/profile
+```
+
+12、初始化数据库
 
 ```shell
 /soft/mysql/bin/mysqld --initialize --user=mysql --basedir=/soft/mysql/ --datadir=/soft/mysql/data/3306/data
@@ -180,7 +186,7 @@ PATH=$PATH:/soft/mysql/bin
 /soft/mysql/bin/mysqld --initialize --user=mysql --basedir=/soft/mysql/ --datadir=/soft/mysql/data/3307/data
 ```
 
-12、启动数据库
+13、启动数据库
 
 ```shell
 /soft/mysql/bin/mysqld_multi start
